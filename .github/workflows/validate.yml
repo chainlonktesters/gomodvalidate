@@ -8,9 +8,9 @@ jobs:
   go-mod-validation:
     name: Validate go.mod dependencies
     runs-on: ubuntu-latest
+    # Skip on merge group events
+    if: ${{ github.event_name == 'pull_request' }} 
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
       - name: Validate go.mod
-        # Skip on merge group events, we dont skip the job itself since we want it to "pass" on the merge group
-        if : ${{ github.event_name == 'pull_request' }}
         uses: smartcontractkit/.github/apps/go-mod-validator@08c2c2bae1ddfba0cd0bb010d9abe9d351edc548 #v0.5.0
